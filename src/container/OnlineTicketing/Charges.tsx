@@ -7,6 +7,7 @@ import RouteAction from '../../store/action/RouteAction';
 import DestinationAction from '../../store/action/DestinationAction';
 import ChargesForm from '../../component/OnlineTicketing/ChargesForm';
 import ChargesList from '../../component/OnlineTicketing/ChargesList';
+import ErrorNotification from '../../component/ErrorNotification';
 
 function MapStateToProps(state){
     return{
@@ -46,6 +47,15 @@ function MapDispatchToProps(dispatch){
 
 class  Charges extends React.Component<any,any>{
 
+    /**
+     *
+     */
+    constructor() {
+        super();
+        this.state = {
+            errorMessage : ""
+        };
+    }
     componentWillMount(){
         this.props.getData();
         this.props.getBus();
@@ -61,17 +71,24 @@ class  Charges extends React.Component<any,any>{
                     destinations={this.props.destinations} /> 
     }
 
+    showMessage(errorMessage){
+        this.setState({errorMessage});
+    }
+
     render(){
         return(
             <div>
                 <h1>Charges</h1>
 
+                <ErrorNotification errorMessage={this.state.errorMessage} />
                 <div className="row">
                     <div className="col-md-offset-1 col-md-10">
                         <ChargesForm routes={this.props.routes} buses={this.props.buses} 
                             insertRow={this.props.insertRow}
                             destinations = {this.props.destinations}
-                            currentCharges={this.props.currentCharges} />
+                            currentCharges={this.props.currentCharges}
+                            charges = {this.props.charges}
+                            showMessage = {this.showMessage.bind(this)} />
                     </div>
                 </div>
 
@@ -79,15 +96,15 @@ class  Charges extends React.Component<any,any>{
                 <table className="table">
                     <thead>
                         <tr>
-                            {/*<td>ID</td>*/}
-                            <td>Start Destination</td>
-                            <td>End Destination</td>
-                            <td>Bus</td>                            
-                            <td>Charges</td>
-                            {/*<td>IsActive</td>*/}
+                            {/*<th>ID</th>*/}
+                            <th>Start Destination</th>
+                            <th>End Destination</th>
+                            <th>Bus</th>                            
+                            <th>Charges</th>
+                            {/*<th>IsActive</th>*/}
 
-                            <td> </td>
-                            <td> </td>
+                            <th> </th>
+                            <th> </th>
                         </tr>
                     </thead>
                     <tbody>
