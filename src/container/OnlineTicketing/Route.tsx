@@ -4,6 +4,7 @@ import RouteAction from '../../store/action/RouteAction';
 import DestinationAction from '../../store/action/DestinationAction';
 import RouteForm from '../../component/OnlineTicketing/RouteForm';
 import RouteList from '../../component/OnlineTicketing/RouteList';
+import ErrorNotification from '../../component/ErrorNotification';
 
 function MapStateToProps(state) {
     return {
@@ -35,6 +36,17 @@ function MapDispatchToProps(dispatch) {
 
 class Routes extends React.Component<any, any>{
 
+    /**
+     *
+     */
+    constructor() {
+        super();
+
+        this.state = {
+            errorMessage : ""
+        };
+    }
+
     componentWillMount() {
         this.props.getData();
         this.props.getDestination();
@@ -52,16 +64,24 @@ class Routes extends React.Component<any, any>{
             deleteRow={this.props.deleteRow} />
     }
 
+    showMessage(msg){
+        this.setState({errorMessage : msg});
+    }
+
     render() {
         //console.log('this.props.routes : ',this.props.routes, this.props.routes.length);
         //console.log('routes : ',Object.keys(this.props.routes))
         return (
             <div>
                 <h1>Route</h1>
+
+                <ErrorNotification errorMessage={this.state.errorMessage} />
                 <RouteForm
                     destinations={this.props.destinations}
                     insertRow={this.props.insertRow}
-                    currentRoute={this.props.currentRoute} />
+                    routes = {this.props.routes}
+                    currentRoute={this.props.currentRoute}
+                    showMessage={this.showMessage.bind(this)} />
 
                 <h2>List</h2>
                 <table className="table">
