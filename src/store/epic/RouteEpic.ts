@@ -52,9 +52,11 @@ export default class RouteEpic {
                 promise2 = rootRef.child('destination/' + val.EndDestinationID).once('value');
 
                 return Observable.forkJoin(promise1, promise2).mergeMap(arr => {
-                    val.StartDestinationTitle = (arr[0] as FirebaseSnap).val().DestinationTitle;
-                    val.EndDestinationTitle = (arr[1] as FirebaseSnap).val().DestinationTitle;
-
+                    let startDest,endDest;
+                    startDest = (arr[0] as FirebaseSnap).val();
+                    endDest = (arr[1] as FirebaseSnap).val();
+                    val.StartDestinationTitle = typeof startDest !== 'undefined' && startDest !== null ? startDest.DestinationTitle : "";
+                    val.EndDestinationTitle = typeof endDest !== 'undefined' && endDest !== null ? endDest.DestinationTitle : "";
                     return Observable.of(RouteAction.getDataSuccess(val));
                 });
             });
