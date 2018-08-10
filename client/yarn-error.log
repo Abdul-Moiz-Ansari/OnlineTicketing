@@ -1,0 +1,84 @@
+Arguments: 
+  E:\Program Files\nodejs\node.exe C:\Users\user1\AppData\Roaming\npm\node_modules\yarn\bin\yarn.js add react-router@3.0.2
+
+PATH: 
+  C:\Users\user1\algs4\java\bin;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;F:\Program Files (x86)\Microsoft SQL Server\110\Tools\Binn\;C:\Program Files\Microsoft SQL Server\110\Tools\Binn\;C:\Program Files\Microsoft SQL Server\110\DTS\Binn\;F:\Program Files (x86)\Microsoft SQL Server\110\Tools\Binn\ManagementStudio\;F:\Program Files (x86)\Microsoft SQL Server\110\DTS\Binn\;C:\Program Files (x86)\Windows Kits\8.1\Windows Performance Toolkit\;F:\Program Files\Git\Git\cmd;E:\Program Files\nodejs\;C:\Users\user1\algs4\bin;C:\Users\user1\algs4\java\bin;C:\Users\user1\AppData\Roaming\npm;E:\Program Files (x86)\Microsoft VS Code\bin
+
+Yarn version: 
+  1.3.2
+
+Node version: 
+  6.9.1
+
+Platform: 
+  win32 x64
+
+npm manifest: 
+  {
+    "name": "onlineticketing-react",
+    "version": "1.0.0",
+    "description": "onlineticketing-react",
+    "scripts": {
+      "serve": "webpack-dev-server --progress --inline --profile --colors --display-error-details --history-api-fallback true --open"
+    },
+    "author": "Abdul Moiz Ansari",
+    "authorGithub": "https://github.com/abdul-moiz-ansari",
+    "license": "ISC",
+    "dependencies": {
+      "chart.js": "^2.7.2",
+      "d3": "^5.1.0",
+      "firebase": "^4.8.0",
+      "griddle-react": "^1.0.0",
+      "moment": "^2.20.1",
+      "react": "15.3.2",
+      "react-addons-shallow-compare": "^15.6.2",
+      "react-chartjs-2": "^2.7.2",
+      "react-datepicker": "^1.0.4",
+      "react-dates": "^16.0.2",
+      "react-dom": "15.3.2",
+      "react-redux": "^4.4.5",
+      "react-router": "^3.0.2",
+      "redux": "^3.6.0",
+      "redux-actions": "^0.12.0",
+      "redux-form": "^7.2.0",
+      "redux-observable": "^0.12.2",
+      "redux-thunk": "^2.2.0",
+      "rxjs": "^5.5.0"
+    },
+    "devDependencies": {
+      "@types/core-js": "0.9.34",
+      "@types/react": "0.14.41",
+      "@types/react-dom": "0.14.18",
+      "@types/react-redux": "^4.4.32",
+      "@types/react-router": "^3.0.5",
+      "@types/redux": "^3.6.31",
+      "@types/redux-actions": "^0.8.30",
+      "axios": "^0.15.3",
+      "copy-webpack-plugin": "3.0.1",
+      "extended-define-webpack-plugin": "^0.1.3",
+      "file-loader": "0.9.0",
+      "html-webpack-plugin": "2.24.0",
+      "jquery": "^3.2.0",
+      "json-loader": "0.5.4",
+      "raw-loader": "0.5.1",
+      "react-alert": "^2.4.0",
+      "react-scripts": "0.9.0",
+      "sass-loader": "4.0.2",
+      "source-map-loader": "0.1.5",
+      "ts-loader": "0.9.5",
+      "typescript": "2.2.1",
+      "url-loader": "0.5.7",
+      "webpack": "1.13.2",
+      "webpack-dev-server": "1.16.2"
+    }
+  }
+
+yarn manifest: 
+  No manifest
+
+Lockfile: 
+  No lockfile
+
+Trace: 
+  Error: EPERM: operation not permitted, unlink 'F:\Abdul Moiz\Web Development\React\Projects\OnlineTicketing\node_modules\chart.js\node_modules\moment'
+      at Error (native)
