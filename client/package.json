@@ -4,7 +4,6 @@
   "description": "onlineticketing-react",
   "proxy" : "http://localhost:8080/",
   "scripts": {
-    "start" : "node server.js",
     "serve": "webpack-dev-server --progress --inline --profile --colors --display-error-details --history-api-fallback true --open",
     "server": "nodemon src/server/index.js",
     "build-client": "webpack -p --progress --inline --profile --colors --display-error-details --history-api-fallback true --open"
