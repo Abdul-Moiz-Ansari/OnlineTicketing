@@ -4,8 +4,6 @@ import {reducer as formReducer} from 'redux-form';
 import {combineEpics,createEpicMiddleware} from 'redux-observable';
 import {composeWithDevTools} from 'redux-devtools-extension';
 
-import {counterReducer} from './reducer/counter';
-import {_userReducer} from './reducer/users';
 import {UserReducer,addUserFormReducer} from './reducer/UserReducer';
 import {busReducer} from './reducer/BusReducer';
 import {RouteReducer} from './reducer/RouteReducer';
@@ -29,8 +27,7 @@ import UserEpic from './epic/UserEpic';
 import DestinationAction from './action/DestinationAction';
 
 interface IAppState{
-    counterReducer,
-    userReducer
+
 }
 
 const bookingEpic = new BookingEpic();
@@ -119,8 +116,6 @@ const rootReducer = combineReducers<IAppState>({
         },
         "addUserForm":addUserFormReducer
     }),
-    counterReducer,
-    _userReducer : _userReducer,
     User : UserReducer,
     busReducer,
     Route : RouteReducer,

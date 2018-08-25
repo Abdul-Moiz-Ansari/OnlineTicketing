@@ -1,7 +1,6 @@
 
 
  export default class ComponentHelper{
-//export default class CommontHelper{
     
     onFormChange(e,pScope){
         let state = pScope.state;
@@ -55,15 +54,4 @@
         }
         return result;
     }
-
-    // getOptionsFromState(stateOptions, valueName, titleName) {
-    //     let options = [];
-    //     if (stateOptions.length > 0) {
-    //         options = stateOptions.map(function (item, index) {
-    //             return (<option value={item[valueName]} key={item[valueName]}>{item[titleName]}</option>)
-    //         });
-    //     }
-    //     options.unshift(<option key={0} value="0">Select</option>)
-    //     return options;
-    // }
 }

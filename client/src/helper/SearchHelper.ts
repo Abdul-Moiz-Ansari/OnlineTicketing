@@ -16,15 +16,9 @@ export default class Searchhelper {
             ScheduleDepartureDate = new Date(item.DepartureDate);
             ScheduleDepartureDate.setHours(0, 0, 0, 0);
 
-            // console.log(item.StartDestinationID, pStartDestinationID ,
-            //     item.StartDestinationID === pStartDestinationID,
-            //     ScheduleDepartureDate.getTime() , pMinDepartureDate.getTime(),
-            //     ScheduleDepartureDate.getTime() >= pMinDepartureDate.getTime());
-
             if (isMatchDestination === true) {
                 if (item.StartDestinationID === pStartDestinationID &&
                     ScheduleDepartureDate.getTime() >= pMinDepartureDate.getTime()) {
-                    //console.log('item.NoOfSeats : ',item.NoOfSeats);
                     noOfSeats = item.NoOfSeats;
                 }
             }
@@ -33,7 +27,7 @@ export default class Searchhelper {
                     noOfSeats = item.NoOfSeats;
                 }
             }
-            //console.log('noOfSeats : ',noOfSeats);
+            
             if (noOfSeats > 0) {
                 Object.keys(bookings).map(bookingKey => {
                     let booking;
@@ -46,7 +40,7 @@ export default class Searchhelper {
                 });
 
                 diff = noOfSeats - noOfSeatsBooked;
-                //console.log('diff : ',diff);
+                
                 if (diff > 0)
                     arrMatchingSchedules.push(item);
             }
