@@ -10,7 +10,6 @@ interface IAuthenticate {
 
 type HOC<childProps, hocProps> = React.ComponentClass<childProps & hocProps> | React.SFC<childProps & hocProps>;
 
-//export default function Authenticate<Props, State, ComponentState>(Comp : new () => Component<any, any>) {
 function Authenticate<Props, State>(Comp: HOC<Props, IAuthenticate | any>): React.ComponentClass<any> {
     
     class Authenticate extends Component<any, any>{

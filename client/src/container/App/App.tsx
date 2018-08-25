@@ -1,6 +1,5 @@
 import * as React from 'react'
 import { Link,browserHistory } from 'react-router';
-import {Back } from '../../component/Back';
 import Navbar from '../../component/Navbar';
 
 import '../../style/style.css';

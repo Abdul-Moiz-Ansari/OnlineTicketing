@@ -7,9 +7,7 @@ import {Provider} from 'react-redux';
  import Home from './container/Home/Home';
 //import Home from './container/OnlineTicketing/Home';
 import AddUser from './container/Users/AddUsers';
-import About from './container/About/About';
 import App from './container/App/App';
-import UsersList from './container/Users/UsersList';
 import AddUsers from './container/Users/AddUsers';
 import Buses from './container/OnlineTicketing/Buses';
 import Destination from './container/OnlineTicketing/Destination';
@@ -23,10 +21,10 @@ import Search from './container/OnlineTicketing/Search';
 
 //import LeaveRequest from './container/Leave/LeaveRequest';
 
-import SignIn from './container/SignIn/SignIn';
-import SignUp from './container/SignIn/SignUp';
-import ChangePassword from './container/SignIn/ChangePassword';
-import UserList from './container/OnlineTicketing/UserList';
+import SignIn from './container/Users/SignIn';
+import SignUp from './container/Users/SignUp';
+import ChangePassword from './container/Users/ChangePassword';
+import UserList from './container/Users/UserList';
 //import Users from './container/Users/Users';
 import {store} from './store/index';
 
@@ -40,7 +38,6 @@ ReactDOM.render(
             <Route path="/signin" component ={SignIn} />
             <Route path="/signup" component ={SignUp} />
             <Route path="/home" component ={Home} />
-            <Route path="/about" component ={About} />
             <Route path="/buses" component ={Buses} />
             <Route path="/destination" component ={Destination} />
             <Route path="/route" component ={Routes} />

@@ -4,9 +4,7 @@ import { Field, reduxForm } from 'redux-form';
 import { required, maxLength, minLength, requiredSelect } from '../../helper/reduxFormHelper';
 import User from '../../models/Users';
 
-//import { UserAction } from '../../store/action/users';
 import UserAction, * as userActionExt from '../../store/action/UserAction';
-import { UserItem } from '../../component/UserItem';
 import ErrorNotification from '../../component/ErrorNotification';
 import Authenticate from '../../HOC/Authenticate';
 import { isNullOrUndefined } from 'util';
@@ -204,8 +202,5 @@ class AddUsers extends React.Component<any, any>{
 }
 
 let comp;
-comp = AddUsers;
-//Commented temp
 comp = Authenticate(AddUsers);
-//comp = reduxForm({ form: "addUserForm" })(comp);
 export default connect(mapStateToProps, mapDispatchToProps)(comp);
