@@ -20,8 +20,8 @@ if (process.env.NODE_ENV === 'production') {
         private_key: private_key,
         client_email: process.env.client_email,
         client_id: process.env.client_id,
-        auth_uri: "auth_uri",
-        token_uri: "token_uri",
+        auth_uri: "https://accounts.google.com/o/oauth2/auth",
+        token_uri: "https://accounts.google.com/o/oauth2/token",
         auth_provider_x509_cert_url: "https://www.googleapis.com/oauth2/v1/certs",
         client_x509_cert_url: process.env.client_x509_cert_url
     };
@@ -54,7 +54,7 @@ app.use(bodyParser.json());
 
 console.log('user over');
 
-app.get('/api/getUsername', (req, res) => res.send({ username: os.userInfo().username }));
+//app.get('/api/getUsername', (req, res) => res.send({ username: os.userInfo().username }));
 
 //POST
 app.post('/api/u', (req, res) => {
