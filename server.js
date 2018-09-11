@@ -1,5 +1,4 @@
 const express = require('express');
-const os = require('os');
 const admin = require('firebase-admin');
 const bodyParser = require('body-parser');
 const dotenv = require('dotenv');
