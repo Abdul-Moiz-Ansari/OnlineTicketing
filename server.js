@@ -9,7 +9,7 @@ const dotenv = require('dotenv');
 const app = express();
 
 dotenv.config();
-//console.log('process.env.NODE_ENV : ',process.env.NODE_ENV);
+console.log('process.env.NODE_ENV : ',process.env.NODE_ENV);
 let serviceAccount;
 if (process.env.NODE_ENV === 'production') {
     let private_key;
@@ -39,6 +39,8 @@ admin.initializeApp({
     databaseURL: "https://onlineticketing-cd96f.firebaseio.com"
 });
 
+console.log('firebase app initialized');
+
 //CORS
 app.use((req, res, next) => {
     res.header("Access-Control-Allow-Origin", "*");
@@ -50,6 +52,8 @@ app.use((req, res, next) => {
 //Body Parser
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
+
+console.log('user over');
 
 app.get('/api/getUsername', (req, res) => res.send({ username: os.userInfo().username }));
 
@@ -116,8 +120,9 @@ app.delete('/api/u/:uid', (req, res) => {
 });
 
 const PORT = process.env.PORT || 8080;
+console.log('PORT : ',PORT);
 
 app.listen(PORT, () => {
-    //console.log('Listening on port ' + PORT.toString() + '!');
+    console.log('Listening on port ' + PORT.toString() + '!');
     //console.log(process.env.PORT);
 });
