@@ -1,6 +1,6 @@
 
 
 module.exports = {
-    api_key : "http://localhost:8080",
+    api_key : "http://onlineticketing.herokuapp.com",
     isAuth : true
 }
