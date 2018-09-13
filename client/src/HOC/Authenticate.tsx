@@ -12,7 +12,7 @@ type HOC<childProps, hocProps> = React.ComponentClass<childProps & hocProps> | R
 
 function Authenticate<Props, State>(Comp: HOC<Props, IAuthenticate | any>): React.ComponentClass<any> {
     
-    class Authenticate extends Component<any, any>{
+    class Authenticate extends Component<any, any>{        
 
         componentDidMount() {
             if (this.props.uid.trim() === "") {
@@ -27,7 +27,12 @@ function Authenticate<Props, State>(Comp: HOC<Props, IAuthenticate | any>): Reac
         }
 
         render() {
-            return <Comp {...this.props} {...this.state} />
+            if(this.props.uid.trim() !== ""){
+                return <Comp {...this.props} {...this.state} />;
+            }
+            else{
+                return null;
+            }            
         }
     }
 
