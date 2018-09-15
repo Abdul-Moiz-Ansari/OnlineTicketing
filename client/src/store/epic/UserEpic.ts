@@ -48,11 +48,11 @@ export default class UserEpic {
                 //             Observable.of(new UserAction().message(error.message))
                 //         );
                 // });
-                return this.SignInGeneral(action.payload);
+                return this.SignInGeneral(action.payload, false);
             });
 
 
-    private SignInGeneral = (user) => {
+    private SignInGeneral = (user, isSignUp) => {
         let persistencePromise, promise;
         const { username, password } = user;
 
@@ -63,8 +63,17 @@ export default class UserEpic {
             promise = FBAuth.signInWithEmailAndPassword(username, password);
             return Observable.fromPromise(promise).mergeMap(
                 function (response_user) {
-                    //console.log('user in SignInGeneral : ', user);
-                    return Observable.of(new UserAction().trackUserStatus(user));
+                    //add user in Firebase Realtime db
+                    if (isSignUp) {
+                        promise = rootRef.child('user/' + user.userID).set(user);
+
+                        return fromPromise(promise)
+                            .mergeMap(() => Observable.of(new UserAction().trackUserStatus(user)))
+                            .catch(err => Observable.of(new UserAction().message(err.message)))
+                    }
+                    else {
+                        return Observable.of(new UserAction().trackUserStatus(user));
+                    }
                 }).catch(error =>
                     Observable.of(new UserAction().message(error.message))
                 );
@@ -84,7 +93,7 @@ export default class UserEpic {
             let result = [];
             let loggedInSubject: ReplaySubject<any>;
 
-
+            //getting the Firebase stream of user authentication
             loggedInSubject = new ReplaySubject(1);
             FBAuth.onAuthStateChanged(loggedInSubject);
             return loggedInSubject.mergeMap(user => {
@@ -92,43 +101,29 @@ export default class UserEpic {
                     return Observable.of(new UserAction().signOutSuccess(null));
                 }
                 else {
-                    // return Observable.concat(
-                    //     Observable.of(new UserAction().getUserCredentials((user as any).uid)),
-                    //     Observable.of(new UserAction().signInSuccess(user))
-                    // );
-
-                    let isSignUp, promise, state, pUser;
+                    let isSignUp, promise, state;
                     state = store.getState();
                     isSignUp = state.User.isSignUp;
 
-                    if (isSignUp) {
-                        pUser = action.payload;
-                        promise = rootRef.child('user/' + pUser.userID).set(pUser);
-                        return Observable.fromPromise(promise)
-                            .mergeMap(snap2 => {
-                                //return Observable.of(new UserAction().addUser_Success(initialUserID))
-                                return concat(
-                                    of(userActionExt.setIsSignUp(false)),
-                                    of(new UserAction().getUserCredentials((user as any).uid)),
-                                    of(new UserAction().signInSuccess(user))
-                                );
-                            })
-                            .catch(err => of(new UserAction().message(err)));
-
-                        //result.push(userActionExt.setUserOtherCredentials(pUser));
-                    }
-                    else {
-                        return concat(
-                            of(new UserAction().getUserCredentials((user as any).uid)),
-                            of(new UserAction().signInSuccess(user))
-                        );
-                    }
-                    // result = result.concat([
-                    //     new UserAction().getUserCredentials((user as any).uid),
-                    //     new UserAction().signInSuccess(user)
-                    // ]);
-
-                    // return result;                    
+                    // if (isSignUp) {
+                    //     //if this is a signup process, then add the user to the database and signin
+                    //     promise = rootRef.child('user/' + action.payload.userID).set(action.payload);
+                    //     return Observable.fromPromise(promise)
+                    //         .mergeMap(snap2 => {                                
+                    //             return concat(
+                    //                 of(userActionExt.setIsSignUp(false)),
+                    //                 of(new UserAction().getUserCredentials((user as any).uid)),
+                    //                 of(new UserAction().signInSuccess(user))
+                    //             );
+                    //         })
+                    //         .catch(err => of(new UserAction().message(err)));
+                    // }
+                    // else {
+                    return concat(
+                        of(new UserAction().getUserCredentials((user as any).uid)),
+                        of(new UserAction().signInSuccess(user))
+                    );
+                    //}                    
                 }
             });
         });
@@ -192,21 +187,24 @@ export default class UserEpic {
         user = action.payload;
         initialUserID = user.userID;
 
-        // promise = Axios.post('http://localhost:8080/api/u', user);
+        //add user in firebase authentication
         promise = Axios.post(AxiosService.port + '/api/u', user);
         return fromPromise(promise)
             .mergeMap((res: any) => {
-                //console.log('res.data : ',res.data);
                 if (res.data.uid) {
+
                     user.userID = res.data.uid;
+
                     if (isSignUp) {
-                        //console.log('user in AddUserConditional : ', user);
-                        return this.SignInGeneral(user);
+                        //if sign up then sign in after adding the user     
+                        return this.SignInGeneral(user, isSignUp);
                     }
                     else {
-                        //normal add user from admin panel                        
+
+                        //add user in Firebase Realtime db
                         promise = rootRef.child('user/' + res.data.uid).set(user);
 
+                        //else make user add flag true
                         return Observable.fromPromise(promise)
                             .mergeMap(snap2 => {
                                 return Observable.of(new UserAction().addUser_Success(initialUserID))
@@ -238,12 +236,6 @@ export default class UserEpic {
             })
             .catch(err => Observable.of(new UserAction().message(err)));
     }
-
-    // SetUserOtherCredentials = (action$) => action$.ofType(userActionExt.SET_USER_OTHER_CREDENTIALS).mergeMap(
-    //     action => {
-
-    //     }
-    // );
 
     DeleteUser = (action$) => action$.ofType(userActionExt.DELETE_USER).mergeMap(
         (action) => {
@@ -304,8 +296,8 @@ export default class UserEpic {
     GetAuthUsers =
         (action$) => action$.ofType(userActionExt.GET_USERS).mergeMap(
             (action) => {
-                let promise;                
-                promise = Axios.get(AxiosService.port + '/api/u');                
+                let promise;
+                promise = Axios.get(AxiosService.port + '/api/u');
                 return fromPromise(promise)
                     .mergeMap((res: any) => {
                         if (res.data.users) {
