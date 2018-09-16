@@ -189,20 +189,19 @@ export default class UserEpic {
 
         //add user in firebase authentication
         promise = Axios.post(AxiosService.port + '/api/u', user);
+        
         return fromPromise(promise)
-            .mergeMap((res: any) => {
-                if (res.data.uid) {
-
-                    user.userID = res.data.uid;
-
+            .mergeMap((res: any) => {                
+                if (res.data.snap.uid) {                    
+                    user = res.data.user;
+                    user.userID = res.data.snap.uid;                    
                     if (isSignUp) {
                         //if sign up then sign in after adding the user     
                         return this.SignInGeneral(user, isSignUp);
                     }
                     else {
-
                         //add user in Firebase Realtime db
-                        promise = rootRef.child('user/' + res.data.uid).set(user);
+                        promise = rootRef.child('user/' + res.data.snap.uid).set(user);
 
                         //else make user add flag true
                         return Observable.fromPromise(promise)
