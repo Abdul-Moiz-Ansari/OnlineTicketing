@@ -8,7 +8,7 @@ const dotenv = require('dotenv');
 const app = express();
 
 dotenv.config();
-console.log('process.env.NODE_ENV : ',process.env.NODE_ENV);
+//console.log('process.env.NODE_ENV : ', process.env.NODE_ENV);
 let serviceAccount;
 if (process.env.NODE_ENV === 'production') {
     let private_key;
@@ -38,7 +38,7 @@ admin.initializeApp({
     databaseURL: "https://onlineticketing-cd96f.firebaseio.com"
 });
 
-console.log('firebase app initialized');
+//console.log('firebase app initialized');
 
 //CORS
 app.use((req, res, next) => {
@@ -52,7 +52,7 @@ app.use((req, res, next) => {
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
-console.log('user over');
+//console.log('user over');
 
 //app.get('/api/getUsername', (req, res) => res.send({ username: os.userInfo().username }));
 
@@ -66,12 +66,14 @@ app.post('/api/u', (req, res) => {
         password: user.password,
         disabled: user.disabled
     };
-
-    //console.log({properties});
+    
     if (user.userID === "") {
         admin.auth()
             .createUser(properties)
-            .then((snap) => res.send(snap))
+            .then((snap) => res.send({
+                snap : snap,
+                user : user
+            }))
             .catch((err) => res.send(err));
     }
     else {
@@ -119,7 +121,7 @@ app.delete('/api/u/:uid', (req, res) => {
 });
 
 const PORT = process.env.PORT || 8080;
-console.log('PORT : ',PORT);
+//console.log('PORT : ', PORT);
 
 app.listen(PORT, () => {
     console.log('Listening on port ' + PORT.toString() + '!');
