@@ -163,7 +163,7 @@ export default class BookingForm extends React.Component<any, any>{
 
         startDestinationOptions.push(<option key={0} value={0}>Select</option>);
         endDestinationOptions.push(<option key={0} value={0}>Select</option>);
-        //console.log('ScheduleID :',ScheduleID);
+        
         if (ScheduleID.trim() !== "") {
 
             RouteID = _.get(schedules, pScheduleID + '.RouteID', "");
@@ -181,7 +181,7 @@ export default class BookingForm extends React.Component<any, any>{
                     EndDestinationTitle = _.get(destinations, EndDestinationID + '.DestinationTitle', "");
                     endDestinationOptions.push(<option key={1} value={EndDestinationID}>{EndDestinationTitle}</option>);
                 }
-                //console.log('startDestinationOptions : ',startDestinationOptions ,'endDestinationOptions  : ',endDestinationOptions );
+                
                 objResult.StartDestinationID = StartDestinationID;
                 objResult.EndDestinationID = EndDestinationID;
             }

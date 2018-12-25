@@ -31,8 +31,8 @@ export default class Searchhelper {
             if (noOfSeats > 0) {
                 Object.keys(bookings).map(bookingKey => {
                     let booking;
-                    booking = bookings[key];
-
+                    booking = bookings[bookingKey];
+                    
                     if (item.BookingID === booking.BookingID)
                         Object.keys(tickets).map(ticketKey => {
                             if (tickets[ticketKey].BookingID === booking.BookingID) { noOfSeatsBooked++; }

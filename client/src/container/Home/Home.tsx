@@ -228,8 +228,8 @@ class Home extends React.Component<any, any>{
 
         todaysDate = new Date();
 
-        if (isExternal && destID.trim() !== "") {
-            isMatchDestination = true;
+        if (isExternal) {
+            isMatchDestination = false;
             searchRecords = searchHelper.getSearchResults_ForDashboard(destID, todaysDate,
                 { schedules, destinations, bookings, tickets, isMatchDestination });
         }
@@ -262,6 +262,7 @@ class Home extends React.Component<any, any>{
         const { charges, tickets, isAdmin, isEmployee, isExternal, uid } = this.props;
         searchResults = this.getSearchRecords();
 
+        //if the logged in user is an admin, show him the charts dashboard
         if (isAdmin) {
             const { chart_data, sale_by_schedule_data } = this.state;
             chartsDiv = (
@@ -277,8 +278,8 @@ class Home extends React.Component<any, any>{
             );
         }
 
+        //if the logged in user is an employee or external user, show him the recent bookings list and available bookings
         if (isExternal || isEmployee) {
-            //put normal dashboard jsx here.
             employeeDiv = (
                 <div className="row">
                     <div className="col-md-6">
@@ -302,7 +303,7 @@ class Home extends React.Component<any, any>{
             );
         }
 
-
+        //Finally, return the jsx
         return (
             <div>
                 <h1>Home</h1>
