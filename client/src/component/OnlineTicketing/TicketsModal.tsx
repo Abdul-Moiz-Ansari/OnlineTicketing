@@ -1,5 +1,4 @@
 import * as React from 'react';
-import * as _ from 'lodash';
 import { Modal } from 'react-bootstrap';
 import { isNullOrUndefined } from 'util';
 

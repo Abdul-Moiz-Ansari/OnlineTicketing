@@ -121,43 +121,48 @@ class BookingC extends React.Component<any, any>{
             return;
         }
 
+        //if charges have not been defined for this schedule
         if (parseFloat(ticketCharges) === 0) {
             state.errorMessage = "Charges have not been entered for this schedule.";
             this.setState(() => state);
             return;
         }
 
+        //if start or end destinations have not been selected
         if (this.state.ddlStartDestination === "0" || this.state.ddlEndDestination === "0") {
             state['errorMessage'] = "Select start and end destinations ";
             this.setState(state);
             return;
         }
 
+        //if it is a new ticket, then assign a new ID to it and push the ID to newTicketIDs array
         isNewTicket = ticket.TicketID === "";
         ticket.TicketID = isNewTicket ? Tickets.length.toString() : ticket.TicketID;   //assigning the next index of tickets array                
 
         ticket.isNewTicket = isNewTicket;
         if (isNewTicket)
             newTicketIDs.push(Tickets.length.toString());
+        //-------------------
 
+        //check if it an existing tickett
         arr = Tickets.filter((item) => {
             if (item.TicketID === ticket.TicketID)
                 return item;
         });
 
-        //console.log(arr.length);
-
+        //if it an existing ticket, take it as existing one, else push it as new one
         if (arr.length > 0) {
             Tickets[Tickets.indexOf(arr[0])] = ticket;
         } else {
             Tickets.push(ticket);
         }
 
+        //Calculate the total amount
         Tickets.map(function (item) {
             totalAmount += parseFloat(item.Amount);
         }, 0);
 
-        //state = this.state;
+        //finally, set the state
         state.Tickets = Tickets;
         state.totalAmount = totalAmount;
         state.currentTicket = new Ticket("", guid(), 0, "", 0, 0, state.ticketCharges, false, "", "", "");

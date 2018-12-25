@@ -96,8 +96,8 @@ class Search extends React.Component<any, any>{
         e.preventDefault();
         let data;
         const {txtArrivalDate, txtDepartureDate, ddlStartDestination, ddlEndDestination} = this.state;
-
-        data = this.getSearchResults(ddlStartDestination, ddlEndDestination, txtArrivalDate, txtDepartureDate);
+        
+        data = this.getSearchResults(ddlStartDestination, ddlEndDestination, txtDepartureDate, txtArrivalDate);
         //console.log('data in form submit : ',data);
         this.setState({ results: data });
     }
@@ -105,7 +105,7 @@ class Search extends React.Component<any, any>{
     getSearchResults(pStartDestinationID, pEndDestinationID, pDepartureDate, pArrivalDate) {
         const {schedules, destinations, bookings, tickets} = this.state;
         let arrMatchingSchedules = [];
-
+        
         //taking the matching schedules with the search
         Object.keys(schedules).map(key => {
             let noOfSeats, noOfSeatsBooked = 0, diff, isAvailable, item;
@@ -120,7 +120,7 @@ class Search extends React.Component<any, any>{
 
                 Object.keys(bookings).map(bookingKey => {
                     let booking;
-                    booking = bookings[key];
+                    booking = bookings[bookingKey];
                     if (item.BookingID === booking.BookingID)
                         Object.keys(tickets).map(ticketKey => {
                             if (tickets[ticketKey].BookingID === booking.BookingID) { noOfSeatsBooked++; }
