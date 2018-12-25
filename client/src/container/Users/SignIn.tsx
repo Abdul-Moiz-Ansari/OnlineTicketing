@@ -6,6 +6,8 @@ import User from '../../models/Users';
 import UserAction from '../../store/action/UserAction';
 import { browserHistory } from 'react-router';
 
+import ErrorNotification from '../../component/ErrorNotification';
+
 
 class SignIn extends React.Component<any, any>{
 
@@ -14,6 +16,8 @@ class SignIn extends React.Component<any, any>{
     }
 
     componentDidMount() {
+        //re-setting the message prop 
+        this.props.setMessage('');
         this.setState({
             uid: this.props.uid
         });
@@ -52,11 +56,12 @@ class SignIn extends React.Component<any, any>{
         <input type={type} {...input} className="form-control" />)    
 
     render() {
-        let {handleSubmit} = this.props;
+        let {handleSubmit,userMessage,setMessage} = this.props;
 
         return (
             <div className="row">
                 <div className="form-group" >
+                    <ErrorNotification errorMessage={userMessage} setMessage={setMessage} />
                     <form onSubmit={handleSubmit(values => this.onFormSubmit(values))}>
 
                         <Field name="username" component={this.createInput} type="text" label="User Name" />
@@ -93,13 +98,16 @@ const validate = values => {
 function MapDispatchToProps(dispatch) {
     return {
         signIn: (user): void => dispatch(new UserAction().signIn(user)),
-        trackUserStatus : () => dispatch(new UserAction().trackUserStatus(null))
+        trackUserStatus : () => dispatch(new UserAction().trackUserStatus(null)),
+        setMessage : (message) => dispatch(new UserAction().message(message))
     }
 }
 
 function MapStatetoProps(state) {
+    const {message} = state.User;
     return {
-        uid: state.User.uid
+        uid: state.User.uid,
+        userMessage : message
     }
 }
 

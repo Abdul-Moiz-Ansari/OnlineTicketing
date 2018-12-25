@@ -8,19 +8,20 @@ interface iErrorNotification{
 
 export default class ErrorNotification extends React.Component<any, any>{
 
-    private isSetMessageFuncProvided : boolean = false;
     //if setMessage function is provided as prop then prop will be used as message, otherwise we'll have to copy message in state and 
     // clear state message when user clicks Clear button
     constructor() {
         super();
         this.state = {
-            errorMessage: ""
+            errorMessage: "",
+            isSetMessageFuncProvided : false
         };
+        this.clearMessage = this.clearMessage.bind(this);
     }
 
     componentDidMount() {
         if(this.props.setMessage){
-            this.isSetMessageFuncProvided = true;
+             this.setState({isSetMessageFuncProvided : true});
         }
         else{
             this.setState({
@@ -30,7 +31,7 @@ export default class ErrorNotification extends React.Component<any, any>{
     }
 
     componentWillReceiveProps(nextProps) {
-        if (this.isSetMessageFuncProvided === false && nextProps.errorMessage !== this.state.errorMessage) {
+            if (this.state.isSetMessageFuncProvided === false && nextProps.errorMessage !== this.state.errorMessage) {
             this.setState({
                 errorMessage: nextProps.errorMessage
             });
@@ -38,7 +39,7 @@ export default class ErrorNotification extends React.Component<any, any>{
     }
 
     clearMessage() {
-        if(this.isSetMessageFuncProvided === true){
+        if(this.state.isSetMessageFuncProvided === true){
             this.props.setMessage("");
         }
         else{
@@ -50,22 +51,14 @@ export default class ErrorNotification extends React.Component<any, any>{
     }
 
     render() {
-        let errorMessage;
-
-        // if(this.isSetMessageFuncProvided){
-        //     errorMessage = this.props.errorMessage;
-        // }
-        // else{
-        //     errorMessage = this.state.errorMessage;
-        // }
-        errorMessage = this.isSetMessageFuncProvided ? this.props.errorMessage : this.state.errorMessage;
-        //console.log({errorMessage});
+        let errorMessage;        
+        errorMessage = this.state.isSetMessageFuncProvided ? this.props.errorMessage : this.state.errorMessage;        
         
         return (
             <div className="row">
                 <div className="col-md-6">
                     <p className="text-danger"> {errorMessage}
-                        <a className="pull-right text-danger" onClick={this.clearMessage.bind(this)}
+                        <a className="pull-right text-danger" onClick={this.clearMessage}
                             style={{ 'fontWeight': 'bold', 'cursor': 'pointer' }}>
                             {errorMessage !== "" ? "X" : ""}
                         </a>

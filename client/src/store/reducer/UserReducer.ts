@@ -128,15 +128,12 @@ export function UserReducer(state = InitState, action: IAction) {
             });
 
         case new UserAction().MESSAGE:
-            newState = Object.assign({}, state, { message: action.payload });
+            newState = {...state,message : action.payload};
             return newState;
 
         default:
-            //newState = state;
             return state;
     }
-    //console.log('newState : ', newState, '| state :',state,'| action.type  : ',action.type);
-    //return newState;
 }
 
 export const addUserFormReducer = (state, action) => {
